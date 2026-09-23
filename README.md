@@ -1,144 +1,46 @@
-# SQL & Database Fundamentals
+# SQL Database Fundamentals
 
-A collection of my **SQL Server and Database Fundamentals** notes, examples, and practice queries.
+A personal study summary covering the core fundamentals of SQL and relational databases — written and organized while learning database concepts (based on the classic "Company" schema: `Employee`, `Departments`, `Project`, `Works_for`, `Dependent`).
 
-This repository documents my learning journey with relational databases using **Microsoft SQL Server / T-SQL**.
+## 📚 Topics Covered
 
-## Topics Covered
+- **DDL (Data Definition Language)** — `CREATE`, `ALTER`, `DROP` table statements
+- **DML (Data Manipulation Language)** — `INSERT`, `UPDATE`, `DELETE`
+- **DQL (Data Query Language)** — `SELECT`, `DISTINCT`, `WHERE`, `ORDER BY`
+- **Joins** — Cross Join, Inner Join, Left/Right/Full Outer Join, Self Join, Multi-table Join
+- **String & Utility Functions** — `ISNULL`, `COALESCE`, `CONVERT`, `CONCAT`, `LIKE` (with wildcard pattern cheatsheet)
+- **Aggregate Functions** — `SUM`, `COUNT`, `MIN`, `MAX`, `AVG`, combined with `GROUP BY` and `HAVING`
+- **Subqueries & Set Operators** — `UNION`, correlated subqueries, `EXISTS`
+- **Practice Queries** — Two full sets of hands-on exercises with solutions, based on a company database (departments, projects, employees, dependents)
 
-* DDL — Data Definition Language
+## 📂 Files
 
-  * `CREATE`
-  * `ALTER`
-  * `DROP`
+| File | Description |
+|---|---|
+| [`01-ddl.sql`](01-ddl.sql) | Creating, altering, and dropping tables |
+| [`02-dml.sql`](02-dml.sql) | Inserting, updating, and deleting data |
+| [`03-dql-basics.sql`](03-dql-basics.sql) | Basic SELECT queries, DISTINCT, WHERE, LIKE, ORDER BY |
+| [`04-joins.sql`](04-joins.sql) | Cross, inner, outer, self, and multi-table joins |
+| [`05-functions.sql`](05-functions.sql) | ISNULL, COALESCE, CONVERT, CONCAT, date/string functions |
+| [`06-aggregate-functions.sql`](06-aggregate-functions.sql) | SUM, COUNT, AVG, MIN, MAX with GROUP BY / HAVING |
+| [`07-practice-queries-1.sql`](07-practice-queries-1.sql) | 12 practice queries (joins-focused) with solutions |
+| [`08-practice-queries-2.sql`](08-practice-queries-2.sql) | 10 practice queries (aggregate/subquery-focused) with solutions |
+| [`09-dml-exercises.sql`](09-dml-exercises.sql) | Real-world style DML scenarios (hiring, promotions, terminations) |
 
-* DML — Data Manipulation Language
+## 🗄️ Sample Schema
 
-  * `INSERT`
-  * `UPDATE`
-  * `DELETE`
+These examples are based on the well-known **Company database** schema, commonly used in database courses:
 
-* DQL — Data Query Language
+- `Employee` (SSN, Fname, Lname, Sex, Salary, Superssn, Dno, ...)
+- `Departments` (Dnum, Dname, MGRSSN, ...)
+- `Project` (Pnumber, Pname, Plocation/City, Dnum, ...)
+- `Works_for` (ESSN, Pno, Hours)
+- `Dependent` (ESSN, Dependent_name, Sex, ...)
 
-  * `SELECT`
-  * `WHERE`
-  * `DISTINCT`
-  * `ORDER BY`
+## 🎯 Purpose
 
-* Joins
+This repository is a personal learning log meant for revision and reference. Contributions, corrections, and suggestions are welcome!
 
-  * `INNER JOIN`
-  * `LEFT JOIN`
-  * `RIGHT JOIN`
-  * `FULL OUTER JOIN`
-  * `CROSS JOIN`
-  * `SELF JOIN`
-  * Multiple-table joins
+## 📝 License
 
-* SQL Functions
-
-  * `ISNULL`
-  * `COALESCE`
-  * `CONVERT`
-  * `CONCAT`
-  * `SUBSTRING`
-  * `YEAR`
-  * `MONTH`
-  * `DAY`
-
-* Pattern Matching
-
-  * `LIKE`
-  * `%`
-  * `_`
-  * Character ranges and sets
-
-* Aggregate Functions
-
-  * `SUM`
-  * `COUNT`
-  * `MIN`
-  * `MAX`
-  * `AVG`
-
-* Grouping
-
-  * `GROUP BY`
-  * `HAVING`
-
-* Subqueries
-
-  * Scalar subqueries
-  * `IN`
-  * `EXISTS`
-  * Nested subqueries
-
-* Set Operations
-
-  * `UNION`
-
-* Database Relationships
-
-  * Foreign keys
-  * Employee-manager self relationships
-  * Employee-dependent relationships
-  * Employee-project relationships
-
-## Database Used
-
-The examples primarily use the classic **Company** database schema containing:
-
-* `Employee`
-* `Departments`
-* `Dependent`
-* `Project`
-* `Works_for`
-
-## Example Queries
-
-### Find employees in a specific department
-
-```sql
-SELECT *
-FROM Employee
-WHERE Dno = 30;
-```
-
-### Find the total hours spent on each project
-
-```sql
-SELECT P.Pname, SUM(W.Hours) AS Total_Hours
-FROM Project P
-INNER JOIN Works_for W
-    ON P.Pnumber = W.Pno
-GROUP BY P.Pname;
-```
-
-### Find departments whose average salary is below the company average
-
-```sql
-SELECT D.Dnum,
-       D.Dname,
-       COUNT(E.SSN) AS NumberOfEmployees
-FROM Departments D
-INNER JOIN Employee E
-    ON D.Dnum = E.Dno
-GROUP BY D.Dnum, D.Dname
-HAVING AVG(E.Salary) < (
-    SELECT AVG(E2.Salary)
-    FROM Employee E2
-);
-```
-
-## Goal
-
-The goal of this repository is to build a strong foundation in **SQL, relational databases, and T-SQL** and to document practical database problems and their solutions.
-
-More advanced SQL topics will be added as I continue learning.
-
-## Technologies
-
-* Microsoft SQL Server
-* T-SQL
-* SQL Server Management Studio (SSMS)
-* Git & GitHub
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
